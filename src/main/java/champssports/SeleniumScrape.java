@@ -1,6 +1,5 @@
 package champssports;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,8 +10,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class SeleniumScrape {
 
@@ -50,10 +49,14 @@ public class SeleniumScrape {
 				"https://www.champssports.com/_-_/keyword-air+jordan+shoes?Rpp=180&Ns=P_BrandName%7C0&cm_SORT=Brand%20Name%20A-Z");
 		for (String url : urls) {
 
-			System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+			/*System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
 			ChromeOptions option = new ChromeOptions();
 			option.addExtensions(new File(pwd + "/Block-image_v1.0.crx"));
-			WebDriver driver = new ChromeDriver(option);
+			WebDriver driver = new ChromeDriver(option);*/
+			FirefoxOptions options = new FirefoxOptions();
+			options.addPreference("permissions.default.image", 2);
+			System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver-v0.19.1-linux64/geckodriver");
+			WebDriver driver = new FirefoxDriver(options);
 
 			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 			driver.get(
@@ -96,7 +99,7 @@ public class SeleniumScrape {
 			}
 			System.out.println("Total no of shoes : " + multiHref.size()+ " for the url : "+url);
 			
-			/*for (Map.Entry m : multiHref.entrySet()) {
+			for (Map.Entry m : multiHref.entrySet()) {
 				// driver1.get((String) itr.next());
 				// Thread.sleep(500);
 				System.out.println("shoe url---" + m.getKey());
@@ -151,7 +154,7 @@ public class SeleniumScrape {
 				System.out.println("Shoe sizes in stock are : " + shoesize.toString());
 				// Thread.sleep(500);
 
-			}*/
+			}
 			driver.close();
 		}
 	}
